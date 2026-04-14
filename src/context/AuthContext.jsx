@@ -6,7 +6,7 @@ const mockUser = {
   id: 1,
   name: "Ali Yılmaz",
   email: "ali@example.com",
-  role: "user",
+  role: "admin",
 };
 
 export const AuthProvider = ({ children }) => {
@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }) => {
       register,
       logout,
       isAuthenticated: !!user,
+      isAdmin: user?.role === "admin",
     }),
     [user]
   );

@@ -9,6 +9,10 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Profile from "./pages/user/Profile";
 import MyReservations from "./pages/user/MyReservations";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminMovies from "./pages/admin/AdminMovies";
+import AdminShowtimes from "./pages/admin/AdminShowtimes";
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
   return (
@@ -24,6 +28,31 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/my-reservations" element={<MyReservations />} />
+
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/movies"
+            element={
+              <AdminRoute>
+                <AdminMovies />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/showtimes"
+            element={
+              <AdminRoute>
+                <AdminShowtimes />
+              </AdminRoute>
+            }
+          />
         </Routes>
       </MainLayout>
     </BrowserRouter>

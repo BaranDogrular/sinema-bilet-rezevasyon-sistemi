@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -23,6 +23,7 @@ const Navbar = () => {
           <Link to="/" className="navbar__link">
             Ana Sayfa
           </Link>
+
           <Link to="/movies" className="navbar__link">
             Filmler
           </Link>
@@ -32,10 +33,17 @@ const Navbar = () => {
               <Link to="/my-reservations" className="navbar__link">
                 Rezervasyonlarım
               </Link>
+
               <Link to="/profile" className="navbar__link">
                 Profil
               </Link>
             </>
+          )}
+
+          {isAdmin && (
+            <Link to="/admin" className="navbar__link">
+              Admin Panel
+            </Link>
           )}
         </nav>
 
