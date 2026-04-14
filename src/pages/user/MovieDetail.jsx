@@ -4,13 +4,18 @@ import "./MovieDetail.css";
 
 const MovieDetail = () => {
   const { id } = useParams();
+
   const movie = movies.find((item) => item.id === Number(id));
 
   if (!movie) {
     return (
       <section className="movie-detail movie-detail--not-found">
         <div className="container">
-          <h2>Film bulunamadı.</h2>
+          <h2 className="movie-detail__not-found-title">Film bulunamadı.</h2>
+          <p className="movie-detail__not-found-text">
+            Aradığınız film sistemde bulunmuyor olabilir.
+          </p>
+
           <Link to="/movies" className="movie-detail__back-button">
             Filmlere Dön
           </Link>
@@ -32,6 +37,7 @@ const MovieDetail = () => {
 
         <div className="movie-detail__content">
           <p className="movie-detail__badge">Öne Çıkan Film</p>
+
           <h1 className="movie-detail__title">{movie.title}</h1>
 
           <div className="movie-detail__meta">
@@ -47,10 +53,12 @@ const MovieDetail = () => {
               <h4>Yönetmen</h4>
               <p>Christopher Nolan</p>
             </div>
+
             <div className="movie-detail__info-box">
               <h4>Salon Türü</h4>
               <p>IMAX / 3D</p>
             </div>
+
             <div className="movie-detail__info-box">
               <h4>Durum</h4>
               <p>Vizyonda</p>
@@ -58,7 +66,13 @@ const MovieDetail = () => {
           </div>
 
           <div className="movie-detail__actions">
-            <button className="movie-detail__primary-btn">Seans Seç</button>
+            <Link
+              to={`/movies/${movie.id}/showtimes`}
+              className="movie-detail__primary-btn"
+            >
+              Seans Seç
+            </Link>
+
             <Link to="/movies" className="movie-detail__secondary-btn">
               Filmlere Dön
             </Link>
