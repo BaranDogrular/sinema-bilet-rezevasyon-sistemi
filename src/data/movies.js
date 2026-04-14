@@ -7,7 +7,7 @@ const movies = [
     rating: "8.4",
     image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80",
     description:
-      "Paul Atreides, kaderiyle yüzleşirken evrenin geleceğini belirleyecek bir savaşa hazırlanır.",
+      "Paul Atreides, ailesini yok eden komploculara karşı intikam savaşına çıkarken Fremenlerle birleşir. Hayatının aşkı ile evrenin kaderi arasında bir seçim yapmak zorunda kalan Paul, korkunç bir geleceği önlemek için çaba gösterir.",
   },
   {
     id: 2,
@@ -17,7 +17,8 @@ const movies = [
     rating: "8.2",
     image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80",
     description:
-      "Atom bombasının geliştirilme sürecini ve bunun insanlık üzerindeki etkilerini anlatır.",
+      "İkinci Dünya Savaşı'nı sona erdiren atom bombalarının geliştirilmesinde büyük rol oynayan fizikçi J. Robert Oppenheimer'ın hayat hikayesinin dramatizasyonu."
+
   },
   {
     id: 3,
@@ -27,7 +28,7 @@ const movies = [
     rating: "8.7",
     image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80",
     description:
-      "İnsanlığın geleceği için uzayda yeni yaşam alanları arayan bir ekibin hikayesi.",
+      "Gelecekte Dünya yaşanmaz hale geldiğinde, çiftçi ve eski NASA pilotu Joseph Cooper, insanlık için yeni bir gezegen bulmak üzere bir araştırma ekibiyle birlikte bir uzay gemisini pilotlamakla görevlendirilir.",
   },
   {
     id: 4,
@@ -37,7 +38,7 @@ const movies = [
     rating: "7.8",
     image: "https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?auto=format&fit=crop&w=800&q=80",
     description:
-      "Batman, Gotham şehrindeki gizemli suçları çözmeye çalışırken karanlık bir komployla karşılaşır.",
+      "Sadist bir seri katil Gotham'daki önemli siyasi figürleri öldürmeye başladığında, Batman şehrin gizli yolsuzluklarını araştırmak ve ailesinin bu olaylardaki rolünü sorgulamak zorunda kalır.",
   },
 
   {
@@ -48,7 +49,7 @@ const movies = [
     rating: "8.4",
     image: "https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80",
     description:
-      "Peter Parker, yeni bir başlangıç yapmaya çalışırken geçmişinin gölgeleriyle tekrar yüzleşmek zorunda kalır.",
+      "No Way Home'dan dört yıl sonra, unutulmuş bir Peter Parker, tam zamanlı bir Örümcek Adam olarak yalnız yaşarken, artan baskı tehlikeli bir değişimi tetikler ve güçlü yeni bir düşman ortaya çıkar.",
   },
   {
     id: 6,
@@ -58,7 +59,7 @@ const movies = [
     rating: "7.8",
     image: "https://images.unsplash.com/photo-1502136969935-8d111dcb9e47?auto=format&fit=crop&w=800&q=80",
     description:
-      "William Shakespeare’in ailesi ve oğlunun trajik kaybı üzerinden ilerleyen duygusal bir hikaye.",
+      "16. yüzyılın sonlarında İngiltere’de, çevresine karşı duyarlı bir şifacı olan Agnes, yerel bir öğretmen ve gelecek vadeden bir oyun yazarı olan William ile bir yuva kurar. Hayatları parçalanmaya başladıkça, mesafe, sessizlik ve keder onları zorlu bir sınava tabi tutar.",
   },
   {
     id: 7,
@@ -68,7 +69,7 @@ const movies = [
     rating: "7.5",
     image: "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80",
     description:
-      "Bir grup genç oyuncunun sahne arkasındaki mücadelelerini ve hayallerini konu alan etkileyici bir drama.",
+      "Mutlu bir nişanlı çift, beklenmedik bir gelişmenin düğün haftalarını altüst etmesiyle zorlu bir sınava tabi tutulur.",
   },
   {
     id: 8,
