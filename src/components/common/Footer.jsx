@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container footer__container">
         <div className="footer__top">
           <div className="footer__brand">
-            <h2 className="footer__logo">CinemaBook</h2>
+            <h2 className="footer__logo">EdenCineverse</h2>
             <p className="footer__text">
               En sevdiğin filmler için hızlı ve güvenli rezervasyon deneyimi.
             </p>
@@ -29,15 +29,15 @@ const Footer = () => {
 
             <div className="footer__column">
               <h4 className="footer__title">İletişim</h4>
-              <span>support@cinemabook.com</span>
-              <span>+90 555 555 55 55</span>
+              <span>support@edencineverse.com</span>
+              <span>+90 534 578 12 67</span>
               <span>İstanbul, Türkiye</span>
             </div>
           </div>
         </div>
 
         <div className="footer__bottom">
-          <p>© 2026 CinemaBook. Tüm hakları saklıdır.</p>
+          <p>© 2026 EdenCineverse. Tüm hakları saklıdır.</p>
         </div>
       </div>
     </footer>

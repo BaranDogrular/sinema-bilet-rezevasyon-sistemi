@@ -62,6 +62,44 @@ const showtimes = [
     price: 200,
     format: "3D",
   },
+{
+  id: 8,
+  movieId: 5,
+  hall: "Salon 1",
+  date: "16 Nisan 2026",
+  time: "14:00",
+  price: 200,
+  format: "IMAX",
+},
+{
+  id: 9,
+  movieId: 6,
+  hall: "Salon 2",
+  date: "16 Nisan 2026",
+  time: "17:00",
+  price: 180,
+  format: "2D",
+},
+{
+  id: 10,
+  movieId: 7,
+  hall: "Salon 3",
+  date: "16 Nisan 2026",
+  time: "19:30",
+  price: 170,
+  format: "2D",
+},
+{
+  id: 11,
+  movieId: 8,
+  hall: "Salon 4",
+  date: "16 Nisan 2026",
+  time: "21:30",
+  price: 220,
+  format: "IMAX",
+},
+
 ];
+
 
 export default showtimes;

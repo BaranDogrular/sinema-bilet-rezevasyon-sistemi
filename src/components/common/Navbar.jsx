@@ -15,8 +15,8 @@ const Navbar = () => {
     <header className="navbar">
       <div className="container navbar__container">
         <Link to="/" className="navbar__logo">
-          <span className="navbar__logo-main">Cinema</span>
-          <span className="navbar__logo-accent">Book</span>
+          <span className="navbar__logo-main">Eden</span>
+          <span className="navbar__logo-accent">Cineverse</span>
         </Link>
 
         <nav className="navbar__menu">
