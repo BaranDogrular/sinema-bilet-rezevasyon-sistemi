@@ -73,6 +73,9 @@
 }
 
 .movie-card__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 12px 16px;
   border-radius: 12px;

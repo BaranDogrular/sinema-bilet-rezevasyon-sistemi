@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -10,10 +11,10 @@ const Navbar = () => {
         </div>
 
         <nav className="navbar__menu">
-          <a href="/" className="navbar__link">Ana Sayfa</a>
-          <a href="/movies" className="navbar__link">Filmler</a>
-          <a href="/showtimes" className="navbar__link">Seanslar</a>
-          <a href="/my-reservations" className="navbar__link">Rezervasyonlarım</a>
+          <Link to="/" className="navbar__link">Ana Sayfa</Link>
+          <Link to="/movies" className="navbar__link">Filmler</Link>
+          <Link to="/showtimes" className="navbar__link">Seanslar</Link>
+          <Link to="/my-reservations" className="navbar__link">Rezervasyonlarım</Link>
         </nav>
 
         <div className="navbar__actions">

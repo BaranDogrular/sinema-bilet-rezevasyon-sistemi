@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./MovieCard.css";
 
 const MovieCard = ({ movie }) => {
@@ -15,7 +16,10 @@ const MovieCard = ({ movie }) => {
           {movie.genre} • {movie.duration}
         </p>
         <p className="movie-card__description">{movie.description}</p>
-        <button className="movie-card__button">Detayları Gör</button>
+
+        <Link to={`/movies/${movie.id}`} className="movie-card__button">
+          Detayları Gör
+        </Link>
       </div>
     </div>
   );
