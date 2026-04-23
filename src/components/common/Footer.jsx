@@ -1,38 +1,41 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="container footer__container">
+      <div className="container">
         <div className="footer__top">
           <div className="footer__brand">
-            <h2 className="footer__logo">EdenCineverse</h2>
-            <p className="footer__text">
-              En sevdiğin filmler için hızlı ve güvenli rezervasyon deneyimi.
-            </p>
+            <h2>
+              Eden<span>Cineverse</span>
+            </h2>
+            <p>En sevdiğin filmler için hızlı ve güvenli rezervasyon deneyimi.</p>
           </div>
 
-          <div className="footer__links">
-            <div className="footer__column">
-              <h4 className="footer__title">Sayfalar</h4>
-              <a href="/">Ana Sayfa</a>
-              <a href="/movies">Filmler</a>
-              <a href="/showtimes">Seanslar</a>
-            </div>
+          <div className="footer__column">
+            <h3>Sayfalar</h3>
+            <ul>
+              <li><Link to="/">Ana Sayfa</Link></li>
+              <li><Link to="/movies">Filmler</Link></li>
+              <li><Link to="/movies">Seanslar</Link></li>
+            </ul>
+          </div>
 
-            <div className="footer__column">
-              <h4 className="footer__title">Hesap</h4>
-              <a href="/login">Giriş Yap</a>
-              <a href="/register">Kayıt Ol</a>
-              <a href="/my-reservations">Rezervasyonlarım</a>
-            </div>
+          <div className="footer__column">
+            <h3>Hesap</h3>
+            <ul>
+              <li><Link to="/login">Giriş Yap</Link></li>
+              <li><Link to="/register">Kayıt Ol</Link></li>
+              <li><Link to="/my-reservations">Rezervasyonlarım</Link></li>
+            </ul>
+          </div>
 
-            <div className="footer__column">
-              <h4 className="footer__title">İletişim</h4>
-              <span>support@edencineverse.com</span>
-              <span>+90 534 578 12 67</span>
-              <span>İstanbul, Türkiye</span>
-            </div>
+          <div className="footer__column">
+            <h3>İletişim</h3>
+            <p>support@edencineverse.com</p>
+            <p>+90 534 578 12 67</p>
+            <p>İstanbul, Türkiye</p>
           </div>
         </div>
 
