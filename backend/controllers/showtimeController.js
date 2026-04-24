@@ -1,158 +1,66 @@
-const showtimes = [
- {
-    id: 1,
-    movieId: 687163,
-    hall: "Salon 1",
-    date: "15 Nisan 2026",
-    time: "13:00",
-    price: 180,
-    format: "2D",
-  },
-  {
-    id: 2,
-    movieId: 687163,
-    hall: "Salon 3",
-    date: "15 Nisan 2026",
-    time: "16:30",
-    price: 220,
-    format: "IMAX",
-  },
-  {
-    id: 3,
-    movieId: 687163,
-    hall: "Salon 2",
-    date: "15 Nisan 2026",
-    time: "20:00",
-    price: 200,
-    format: "3D",
-  },
-  {
-    id: 4,
-    movieId: 872585,
-    hall: "Salon 4",
-    date: "15 Nisan 2026",
-    time: "14:00",
-    price: 170,
-    format: "2D",
-  },
-  {
-    id: 5,
-    movieId: 872585,
-    hall: "Salon 1",
-    date: "15 Nisan 2026",
-    time: "18:30",
-    price: 210,
-    format: "IMAX",
-  },
-  {
-    id: 6,
-    movieId: 157336,
-    hall: "Salon 5",
-    date: "15 Nisan 2026",
-    time: "17:00",
-    price: 190,
-    format: "2D",
-  },
-  {
-    id: 7,
-    movieId: 414906,
-    hall: "Salon 2",
-    date: "15 Nisan 2026",
-    time: "21:00",
-    price: 200,
-    format: "3D",
-  },
-{
-  id: 8,
-  movieId: 1325734,
-  hall: "Salon 1",
-  date: "16 Nisan 2026",
-  time: "14:00",
-  price: 200,
-  format: "IMAX",
-},
-{
-  id: 9,
-  movieId: 693134,
-  hall: "Salon 2",
-  date: "16 Nisan 2026",
-  time: "17:00",
-  price: 180,
-  format: "2D",
-},
-{
-  id: 10,
-  movieId: 969681,
-  hall: "Salon 3",
-  date: "16 Nisan 2026",
-  time: "19:30",
-  price: 170,
-  format: "2D",
-},
-{
-  id: 12,
-  movieId: 858024,
-  hall: "Salon 4",
-  date: "16 Nisan 2026",
-  time: "21:30",
-  price: 220,
-  format: "IMAX",
-},{
-  id: 13,
-  movieId: 858024,
-  hall: "Salon 7",
-  date: "17 Nisan 2026",
-  time: "13:30",
-  price: 220,
-  format: "3D",
-},{
-  id: 14,
-  movieId: 969681,
-  hall: "Salon 1",
-  date: "17 Nisan 2026",
-  time: "00.00",
-  price: 220,
-  format: "2D",
-},{
-  id: 15,
-  movieId: 693134,
-  hall: "Salon 3",
-  date: "16 Nisan 2026",
-  time: "19:30",
-  price: 220,
-  format: "IMAX",
-},{
-  id: 16,
-  movieId: 1325734,
-  hall: "Salon 5",
-  date: "16 Nisan 2026",
-  time: "21:30",
-  price: 220,
-  format: "IMAX",
-},
-{
-  id: 17,
-  movieId: 414906,
-  hall: "Salon 9",
-  date: "16 Nisan 2026",
-  time: "21:30",
-  price: 220,
-  format: "IMAX",
-},
-];
+import pool from "../config/db.js";
 
-export const getAllShowtimes = (req, res) => {
-  res.json({ showtimes });
+export const getAllShowtimes = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        showtimes.id,
+        showtimes.movie_id AS "movieId",
+        movies.tmdb_id AS "tmdbId",
+        movies.title AS "movieTitle",
+        showtimes.hall,
+        showtimes.date,
+        showtimes.time,
+        showtimes.price,
+        showtimes.format
+      FROM showtimes
+      JOIN movies ON movies.id = showtimes.movie_id
+      ORDER BY showtimes.id ASC
+    `);
+
+    res.json({ showtimes: result.rows });
+  } catch (error) {
+    res.status(500).json({
+      message: "Seanslar alınamadı.",
+      error: error.message,
+    });
+  }
 };
 
-export const getShowtimeById = (req, res) => {
-  const { id } = req.params;
+export const getShowtimeById = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const showtime = showtimes.find((item) => item.id === Number(id));
+    const result = await pool.query(
+      `
+      SELECT
+        showtimes.id,
+        showtimes.movie_id AS "movieId",
+        movies.tmdb_id AS "tmdbId",
+        movies.title AS "movieTitle",
+        showtimes.hall,
+        showtimes.date,
+        showtimes.time,
+        showtimes.price,
+        showtimes.format
+      FROM showtimes
+      JOIN movies ON movies.id = showtimes.movie_id
+      WHERE showtimes.movie_id = (
+      SELECT id FROM movies WHERE id = $1 OR tmdb_id = $1
+    )
+      `,
+      [id]
+    );
 
-  if (!showtime) {
-    return res.status(404).json({ message: "Seans bulunamadı." });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Seans bulunamadı." });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({
+      message: "Seans alınamadı.",
+      error: error.message,
+    });
   }
-
-  res.json(showtime);
 };

@@ -37,31 +37,20 @@ export const AuthProvider = ({ children }) => {
       };
     }
   };
+  
+const register = async (name, email, password) => {
+  const response = await axios.post("http://localhost:5000/api/auth/register", {
+    name,
+    email,
+    password,
+  });
 
-  const register = async (name, email, password) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        {
-          name,
-          email,
-          password,
-        }
-      );
+  const registeredUser = response.data.user;
+  setUser(registeredUser);
+  localStorage.setItem("user", JSON.stringify(registeredUser));
 
-      const registeredUser = response.data.user;
-
-      setUser(registeredUser);
-      localStorage.setItem("user", JSON.stringify(registeredUser));
-
-      return { success: true };
-    } catch (error) {
-      return {
-        success: false,
-        message: error.response?.data?.message || "Kayıt başarısız.",
-      };
-    }
-  };
+  return { success: true };
+};
 
   const logout = () => {
     setUser(null);

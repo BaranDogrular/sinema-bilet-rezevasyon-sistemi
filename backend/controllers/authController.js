@@ -1,19 +1,4 @@
-let users = [
-  {
-    id: 1,
-    name: "Admin User",
-    email: "admin@example.com",
-    password: "123456",
-    role: "admin",
-  },
-  {
-    id: 2,
-    name: "Normal User",
-    email: "user@example.com",
-    password: "123456",
-    role: "user",
-  },
-];
+import pool from "../config/db.js";
 
 export const getAuthStatus = (req, res) => {
   res.json({
@@ -21,59 +6,70 @@ export const getAuthStatus = (req, res) => {
   });
 };
 
-export const registerUser = (req, res) => {
-  const { name, email, password } = req.body;
+export const registerUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-  const existingUser = users.find((user) => user.email === email);
+    const existingUser = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
 
-  if (existingUser) {
-    return res.status(400).json({
-      message: "Bu email ile kayıtlı kullanıcı zaten var.",
+    if (existingUser.rows.length > 0) {
+      return res.status(400).json({
+        message: "Bu email ile kayıtlı kullanıcı zaten var.",
+      });
+    }
+
+    const result = await pool.query(
+      `
+      INSERT INTO users (name, email, password, role)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id, name, email, role
+      `,
+      [name, email, password, "user"]
+    );
+
+    res.status(201).json({
+      message: "Kayıt başarılı.",
+      user: result.rows[0],
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Kayıt başarısız.",
+      error: error.message,
     });
   }
-
-  const newUser = {
-    id: Date.now(),
-    name,
-    email,
-    password,
-    role: "user",
-  };
-
-  users.push(newUser);
-
-  res.status(201).json({
-    message: "Kayıt başarılı.",
-    user: {
-      id: newUser.id,
-      name: newUser.name,
-      email: newUser.email,
-      role: newUser.role,
-    },
-  });
 };
 
-export const loginUser = (req, res) => {
-  const { email, password } = req.body;
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  const user = users.find(
-    (item) => item.email === email && item.password === password
-  );
+    const result = await pool.query(
+      `
+      SELECT id, name, email, role
+      FROM users
+      WHERE email = $1 AND password = $2
+      `,
+      [email, password]
+    );
 
-  if (!user) {
-    return res.status(401).json({
-      message: "Email veya şifre hatalı.",
+    if (result.rows.length === 0) {
+      return res.status(401).json({
+        message: "Email veya şifre hatalı.",
+      });
+    }
+
+    res.json({
+      message: "Giriş başarılı.",
+      user: result.rows[0],
+      token: "test-token-123",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Giriş başarısız.",
+      error: error.message,
     });
   }
-
-  res.json({
-    message: "Giriş başarılı.",
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    },
-    token: "test-token-123",
-  });
 };
