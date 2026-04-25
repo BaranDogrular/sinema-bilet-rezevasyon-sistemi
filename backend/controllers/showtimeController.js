@@ -45,9 +45,7 @@ export const getShowtimeById = async (req, res) => {
         showtimes.format
       FROM showtimes
       JOIN movies ON movies.id = showtimes.movie_id
-      WHERE showtimes.movie_id = (
-      SELECT id FROM movies WHERE id = $1 OR tmdb_id = $1
-    )
+      WHERE showtimes.id = $1
       `,
       [id]
     );
@@ -60,6 +58,41 @@ export const getShowtimeById = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Seans alınamadı.",
+      error: error.message,
+    });
+  }
+};
+
+export const getShowtimesByMovieId = async (req, res) => {
+  try {
+    const { movieId } = req.params;
+
+    const result = await pool.query(
+      `
+      SELECT
+        showtimes.id,
+        showtimes.movie_id AS "movieId",
+        movies.tmdb_id AS "tmdbId",
+        movies.title AS "movieTitle",
+        showtimes.hall,
+        showtimes.date,
+        showtimes.time,
+        showtimes.price,
+        showtimes.format
+      FROM showtimes
+      JOIN movies ON movies.id = showtimes.movie_id
+      WHERE showtimes.movie_id = (
+        SELECT id FROM movies WHERE id = $1 OR tmdb_id = $1
+      )
+      ORDER BY showtimes.id ASC
+      `,
+      [Number(movieId)]
+    );
+
+    res.json({ showtimes: result.rows });
+  } catch (error) {
+    res.status(500).json({
+      message: "Filme ait seanslar alınamadı.",
       error: error.message,
     });
   }

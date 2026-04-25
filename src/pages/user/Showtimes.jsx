@@ -1,43 +1,38 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { getMovieById } from "../../services/tmdb";
 import "./Showtimes.css";
 
 const Showtimes = () => {
   const { id } = useParams();
+
   const [movie, setMovie] = useState(null);
   const [showtimes, setShowtimes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchShowtimes = async () => {
       try {
         setLoading(true);
 
-        const movieData = await getMovieById(id);
-        const showtimeRes = await axios.get("http://localhost:5000/api/showtimes");
+        const movieRes = await axios.get(`http://localhost:5000/api/movies/${id}`);
+        setMovie(movieRes.data);
 
-        if (movieData) {
-          setMovie({
-            id: movieData.id,
-            title: movieData.title,
-          });
-        }
-
-        const filteredShowtimes = showtimeRes.data.showtimes.filter(
-          (showtime) => showtime.movieId === Number(id)
+        const showtimeRes = await axios.get(
+          `http://localhost:5000/api/showtimes/movie/${id}`
         );
 
-        setShowtimes(filteredShowtimes);
+        setShowtimes(showtimeRes.data.showtimes);
       } catch (error) {
-        console.error("Seanslar alınamadı:", error);
+        console.error("Seans bilgileri alınamadı:", error);
+        setMovie(null);
+        setShowtimes([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchShowtimes();
   }, [id]);
 
   if (loading) {
@@ -93,7 +88,7 @@ const Showtimes = () => {
               </div>
             ))
           ) : (
-            <p>Bu film için henüz seans bulunmuyor.</p>
+            <p>Bu film için seans bulunamadı.</p>
           )}
         </div>
       </div>
