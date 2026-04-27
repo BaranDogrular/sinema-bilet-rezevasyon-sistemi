@@ -9,8 +9,12 @@ import Profile from "./pages/user/Profile";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminMovies from "./pages/admin/AdminMovies";
+import AdminShowtimes from "./pages/admin/AdminShowtimes";
+
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
+
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRoute from "./routes/AdminRoute";
 
@@ -55,6 +59,23 @@ function App() {
             </AdminRoute>
           }
         />
+
+        <Route
+          path="/admin/movies"
+          element={
+            <AdminRoute>
+              <AdminMovies />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/showtimes"
+          element={
+           <AdminRoute>
+      <AdminShowtimes />
+    </AdminRoute>
+  }
+/>
       </Routes>
 
       <Footer />

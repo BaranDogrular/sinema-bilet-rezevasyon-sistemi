@@ -1,50 +1,93 @@
-import movies from "../../data/movies";
-import "./Admin.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./AdminMovies.css";
 
 const AdminMovies = () => {
+  const [movies, setMovies] = useState([]);
+  const [formData, setFormData] = useState({
+    tmdbId: "",
+    title: "",
+    genre: "",
+    duration: "",
+    rating: "",
+    image: "",
+    description: "",
+    releaseDate: "",
+  });
+
+  const fetchMovies = async () => {
+    const response = await axios.get("http://localhost:5000/api/movies");
+    setMovies(response.data.movies || response.data);
+  };
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleAddMovie = async (e) => {
+    e.preventDefault();
+
+    await axios.post("http://localhost:5000/api/movies", {
+      ...formData,
+      tmdbId: formData.tmdbId ? Number(formData.tmdbId) : null,
+    });
+
+    setFormData({
+      tmdbId: "",
+      title: "",
+      genre: "",
+      duration: "",
+      rating: "",
+      image: "",
+      description: "",
+      releaseDate: "",
+    });
+
+    fetchMovies();
+  };
+
+  const handleDeleteMovie = async (id) => {
+    await axios.delete(`http://localhost:5000/api/movies/${id}`);
+    fetchMovies();
+  };
+
   return (
-    <section className="admin-page">
+    <section className="admin-movies">
       <div className="container">
-        <div className="admin-page__header admin-page__header--row">
-          <div>
-            <p className="admin-page__subtitle">Film Yönetimi</p>
-            <h1 className="admin-page__title">Filmler</h1>
-          </div>
+        <h1>Film Yönetimi</h1>
 
-          <button className="admin-page__action-btn">Yeni Film Ekle</button>
-        </div>
+        <form className="admin-movies__form" onSubmit={handleAddMovie}>
+          <input name="tmdbId" placeholder="TMDB ID" value={formData.tmdbId} onChange={handleChange} />
+          <input name="title" placeholder="Film adı" value={formData.title} onChange={handleChange} required />
+          <input name="genre" placeholder="Tür" value={formData.genre} onChange={handleChange} />
+          <input name="duration" placeholder="Süre" value={formData.duration} onChange={handleChange} />
+          <input name="rating" placeholder="Puan" value={formData.rating} onChange={handleChange} />
+          <input name="image" placeholder="Poster URL" value={formData.image} onChange={handleChange} />
+          <input name="releaseDate" placeholder="Vizyon tarihi" value={formData.releaseDate} onChange={handleChange} />
+          <textarea name="description" placeholder="Açıklama" value={formData.description} onChange={handleChange} />
 
-        <div className="admin-table-wrapper">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Film Adı</th>
-                <th>Tür</th>
-                <th>Süre</th>
-                <th>Puan</th>
-                <th>İşlemler</th>
-              </tr>
-            </thead>
+          <button type="submit">Film Ekle</button>
+        </form>
 
-            <tbody>
-              {movies.map((movie) => (
-                <tr key={movie.id}>
-                  <td>{movie.id}</td>
-                  <td>{movie.title}</td>
-                  <td>{movie.genre}</td>
-                  <td>{movie.duration}</td>
-                  <td>{movie.rating}</td>
-                  <td>
-                    <div className="admin-table__actions">
-                      <button className="admin-btn admin-btn--edit">Düzenle</button>
-                      <button className="admin-btn admin-btn--delete">Sil</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="admin-movies__list">
+          {movies.map((movie) => (
+            <div className="admin-movies__card" key={movie.id}>
+              <img src={movie.image} alt={movie.title} />
+              <div>
+                <h3>{movie.title}</h3>
+                <p>{movie.genre}</p>
+                <p>{movie.duration}</p>
+              </div>
+              <button onClick={() => handleDeleteMovie(movie.id)}>Sil</button>
+            </div>
+          ))}
         </div>
       </div>
     </section>

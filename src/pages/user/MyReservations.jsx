@@ -6,6 +6,7 @@ import "./MyReservations.css";
 
 const MyReservations = () => {
   const { user, isAuthenticated } = useAuth();
+
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
 

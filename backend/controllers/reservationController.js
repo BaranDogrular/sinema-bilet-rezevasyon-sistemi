@@ -7,23 +7,29 @@ export const getAllReservations = async (req, res) => {
         r.id,
         r.user_id AS "userId",
         m.title AS "movieTitle",
-        s.date,
-        s.time,
-        s.hall,
+        st.date,
+        st.time,
+        st.hall,
         r.total_price AS "totalPrice",
         r.status,
-        COALESCE(array_agg(se.seat_no) FILTER (WHERE se.seat_no IS NOT NULL), '{}') AS seats
+        COALESCE(
+          array_agg(s.seat_no ORDER BY s.seat_no) 
+          FILTER (WHERE s.seat_no IS NOT NULL),
+          '{}'
+        ) AS seats
       FROM reservations r
-      JOIN showtimes s ON s.id = r.showtime_id
-      JOIN movies m ON m.id = s.movie_id
+      JOIN movies m ON m.id = r.movie_id
+      JOIN showtimes st ON st.id = r.showtime_id
       LEFT JOIN reservation_seats rs ON rs.reservation_id = r.id
-      LEFT JOIN seats se ON se.id = rs.seat_id
-      GROUP BY r.id, m.title, s.date, s.time, s.hall
+      LEFT JOIN seats s ON s.id = rs.seat_id
+      GROUP BY r.id, m.title, st.date, st.time, st.hall
       ORDER BY r.id DESC
     `);
 
     res.json({ reservations: result.rows });
   } catch (error) {
+    console.error("Rezervasyonlar alınamadı:", error.message);
+
     res.status(500).json({
       message: "Rezervasyonlar alınamadı.",
       error: error.message,
@@ -39,9 +45,9 @@ export const createReservation = async (req, res) => {
       `
       INSERT INTO reservations
       (user_id, showtime_id, movie_id, total_price, status)
-      SELECT $1, s.id, s.movie_id, $3, 'Onaylandı'
-      FROM showtimes s
-      WHERE s.id = $2
+      SELECT $1, st.id, st.movie_id, $3, 'Onaylandı'
+      FROM showtimes st
+      WHERE st.id = $2
       RETURNING *
       `,
       [userId, showtimeId, totalPrice]
@@ -52,7 +58,8 @@ export const createReservation = async (req, res) => {
     for (const seatNo of seats) {
       const seatResult = await pool.query(
         `
-        SELECT id FROM seats
+        SELECT id
+        FROM seats
         WHERE showtime_id = $1 AND seat_no = $2
         `,
         [showtimeId, seatNo]
@@ -86,6 +93,8 @@ export const createReservation = async (req, res) => {
       reservation,
     });
   } catch (error) {
+    console.error("Rezervasyon DB hatası:", error.message);
+
     res.status(500).json({
       message: "Rezervasyon başarısız.",
       error: error.message,

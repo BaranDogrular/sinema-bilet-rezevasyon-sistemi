@@ -1,60 +1,161 @@
-import showtimes from "../../data/showtimes";
-import movies from "../../data/movies";
-import "./Admin.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./AdminMovies.css";
 
 const AdminShowtimes = () => {
-  const getMovieTitle = (movieId) => {
-    const movie = movies.find((item) => item.id === movieId);
-    return movie ? movie.title : "Bilinmiyor";
+  const [showtimes, setShowtimes] = useState([]);
+  const [movies, setMovies] = useState([]);
+
+  const [formData, setFormData] = useState({
+    movieId: "",
+    hall: "",
+    date: "",
+    time: "",
+    price: "",
+    format: "",
+  });
+
+  const fetchData = async () => {
+    try {
+      const movieRes = await axios.get("http://localhost:5000/api/movies");
+      const showtimeRes = await axios.get("http://localhost:5000/api/showtimes");
+
+      setMovies(movieRes.data.movies || []);
+      setShowtimes(showtimeRes.data.showtimes || []);
+    } catch (error) {
+      console.error("Admin verileri alınamadı:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post("http://localhost:5000/api/showtimes", {
+        movieId: Number(formData.movieId),
+        hall: formData.hall,
+        date: formData.date,
+        time: formData.time,
+        price: Number(formData.price),
+        format: formData.format,
+      });
+
+      setFormData({
+        movieId: "",
+        hall: "",
+        date: "",
+        time: "",
+        price: "",
+        format: "",
+      });
+
+      fetchData();
+    } catch (error) {
+      console.error("Seans eklenemedi:", error.response?.data || error);
+      alert("Seans eklenemedi.");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/showtimes/${id}`);
+      fetchData();
+    } catch (error) {
+      console.error("Seans silinemedi:", error.response?.data || error);
+      alert("Seans silinemedi.");
+    }
   };
 
   return (
-    <section className="admin-page">
+    <section className="admin-movies">
       <div className="container">
-        <div className="admin-page__header admin-page__header--row">
-          <div>
-            <p className="admin-page__subtitle">Seans Yönetimi</p>
-            <h1 className="admin-page__title">Seanslar</h1>
-          </div>
+        <h1>Seans Yönetimi</h1>
 
-          <button className="admin-page__action-btn">Yeni Seans Ekle</button>
-        </div>
+        <form className="admin-movies__form" onSubmit={handleSubmit}>
+          <select
+            name="movieId"
+            value={formData.movieId}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Film Seç</option>
+            {movies.map((movie) => (
+              <option key={movie.id} value={movie.id}>
+                {movie.title}
+              </option>
+            ))}
+          </select>
 
-        <div className="admin-table-wrapper">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Film</th>
-                <th>Tarih</th>
-                <th>Saat</th>
-                <th>Salon</th>
-                <th>Format</th>
-                <th>Fiyat</th>
-                <th>İşlemler</th>
-              </tr>
-            </thead>
+          <input
+            name="hall"
+            placeholder="Salon"
+            value={formData.hall}
+            onChange={handleChange}
+            required
+          />
 
-            <tbody>
-              {showtimes.map((showtime) => (
-                <tr key={showtime.id}>
-                  <td>{showtime.id}</td>
-                  <td>{getMovieTitle(showtime.movieId)}</td>
-                  <td>{showtime.date}</td>
-                  <td>{showtime.time}</td>
-                  <td>{showtime.hall}</td>
-                  <td>{showtime.format}</td>
-                  <td>{showtime.price} ₺</td>
-                  <td>
-                    <div className="admin-table__actions">
-                      <button className="admin-btn admin-btn--edit">Düzenle</button>
-                      <button className="admin-btn admin-btn--delete">Sil</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <input
+            name="date"
+            placeholder="Tarih"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            name="time"
+            placeholder="Saat"
+            value={formData.time}
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            name="price"
+            placeholder="Fiyat"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            name="format"
+            placeholder="2D / IMAX / 3D"
+            value={formData.format}
+            onChange={handleChange}
+            required
+          />
+
+          <button type="submit">Seans Ekle</button>
+        </form>
+
+        <div className="admin-movies__list">
+          {showtimes.map((showtime) => (
+            <div className="admin-movies__card" key={showtime.id}>
+              <div>
+                <h3>{showtime.movieTitle}</h3>
+                <p>
+                  {showtime.date} - {showtime.time}
+                </p>
+                <p>
+                  {showtime.hall} - {showtime.format} - {showtime.price} ₺
+                </p>
+              </div>
+
+              <button onClick={() => handleDelete(showtime.id)}>Sil</button>
+            </div>
+          ))}
         </div>
       </div>
     </section>

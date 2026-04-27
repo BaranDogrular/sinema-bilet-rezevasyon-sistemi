@@ -60,3 +60,56 @@ export const getMovieById = async (req, res) => {
     });
   }
 };
+export const createMovie = async (req, res) => {
+  try {
+    const {
+      tmdbId,
+      title,
+      genre,
+      duration,
+      rating,
+      image,
+      description,
+      releaseDate,
+    } = req.body;
+
+    const result = await pool.query(
+      `
+      INSERT INTO movies
+      (tmdb_id, title, genre, duration, rating, image, description, release_date)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+      RETURNING *
+      `,
+      [tmdbId, title, genre, duration, rating, image, description, releaseDate]
+    );
+
+    res.status(201).json({
+      message: "Film eklendi.",
+      movie: result.rows[0],
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Film eklenemedi.",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteMovie = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await pool.query(`DELETE FROM movies WHERE id = $1 OR tmdb_id = $1`, [
+      Number(id),
+    ]);
+
+    res.json({
+      message: "Film silindi.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Film silinemedi.",
+      error: error.message,
+    });
+  }
+};

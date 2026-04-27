@@ -1,0 +1,73 @@
+.admin-movies {
+  padding: 80px 0;
+  background: #020617;
+  color: white;
+  min-height: 100vh;
+}
+
+.admin-movies h1 {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.admin-movies__form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+  padding: 24px;
+  background: #111827;
+  border-radius: 18px;
+}
+
+.admin-movies__form input,
+.admin-movies__form textarea {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #020617;
+  color: white;
+}
+
+.admin-movies__form textarea {
+  grid-column: span 2;
+  min-height: 100px;
+}
+
+.admin-movies__form button {
+  grid-column: span 2;
+  padding: 14px;
+  border-radius: 10px;
+  background: #ef4444;
+  color: white;
+  font-weight: 700;
+}
+
+.admin-movies__list {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-movies__card {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  background: #111827;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.admin-movies__card img {
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.admin-movies__card button {
+  background: #ef4444;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+}

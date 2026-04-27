@@ -97,3 +97,45 @@ export const getShowtimesByMovieId = async (req, res) => {
     });
   }
 };
+export const createShowtime = async (req, res) => {
+  try {
+    const { movieId, hall, date, time, price, format } = req.body;
+
+    const result = await pool.query(
+      `
+      INSERT INTO showtimes
+      (movie_id, hall, date, time, price, format)
+      VALUES ($1,$2,$3,$4,$5,$6)
+      RETURNING *
+      `,
+      [movieId, hall, date, time, price, format]
+    );
+
+    res.status(201).json({
+      message: "Seans eklendi.",
+      showtime: result.rows[0],
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Seans eklenemedi.",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteShowtime = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await pool.query(`DELETE FROM showtimes WHERE id = $1`, [id]);
+
+    res.json({
+      message: "Seans silindi.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Seans silinemedi.",
+      error: error.message,
+    });
+  }
+};
