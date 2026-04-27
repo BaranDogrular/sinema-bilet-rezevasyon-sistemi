@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import showtimeRoutes from "./routes/showtimeRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -26,6 +27,7 @@ app.use("/api/showtimes", showtimeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/seats", seatRoutes);
+app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 

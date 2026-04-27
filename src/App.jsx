@@ -11,6 +11,8 @@ import Register from "./pages/auth/Register";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminMovies from "./pages/admin/AdminMovies";
 import AdminShowtimes from "./pages/admin/AdminShowtimes";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminReservations from "./pages/admin/AdminReservations";
 
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
@@ -72,10 +74,26 @@ function App() {
           path="/admin/showtimes"
           element={
            <AdminRoute>
-      <AdminShowtimes />
-    </AdminRoute>
-  }
-/>
+            <AdminShowtimes />
+           </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <AdminRoute>
+              <AdminUsers />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/reservations"
+          element={
+            <AdminRoute>
+              <AdminReservations />
+            </AdminRoute>
+          }
+        />
       </Routes>
 
       <Footer />
