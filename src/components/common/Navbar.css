@@ -1,35 +1,30 @@
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(11, 15, 25, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #000000;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+  padding: 14px 0;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
 .navbar__container {
-  min-height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 32px;
 }
 
 .navbar__logo {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
-.navbar__logo-main {
-  color: var(--text-main);
-}
-
-.navbar__logo-accent {
-  color: var(--primary);
+.navbar__logo-full {
+  width: 280px;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .navbar__menu {
@@ -38,14 +33,38 @@
   gap: 28px;
 }
 
-.navbar__link {
-  color: var(--text-secondary);
-  font-size: 16px;
-  transition: color 0.3s ease;
+.navbar__link,
+.navbar__menu a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
-.navbar__link:hover {
-  color: var(--text-main);
+.navbar__link::after,
+.navbar__menu a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  transform: translateX(-50%);
+  transition: width 0.25s ease;
+}
+
+.navbar__link:hover,
+.navbar__menu a:hover {
+  color: #ffffff;
+}
+
+.navbar__link:hover::after,
+.navbar__menu a:hover::after {
+  width: 100%;
 }
 
 .navbar__actions {
@@ -54,53 +73,94 @@
   gap: 12px;
 }
 
+.navbar__user,
+.navbar__user-name {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.navbar__button,
 .navbar__login-btn,
 .navbar__register-btn {
   padding: 10px 18px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
+.navbar__button,
 .navbar__login-btn {
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: var(--text-main);
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.75);
+  color: #d4af37;
 }
 
+.navbar__button:hover,
 .navbar__login-btn:hover {
-  background-color: rgba(255, 255, 255, 0.06);
+  background: #d4af37;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.24);
+}
+
+.navbar__button--secondary {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.navbar__button--secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
 .navbar__register-btn {
-  background: linear-gradient(135deg, var(--primary), #ef4444);
-  color: white;
+  border: 1px solid #d4af37;
+  background: #d4af37;
+  color: #000000;
 }
 
 .navbar__register-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 10px 22px rgba(212, 175, 55, 0.28);
 }
 
 @media (max-width: 992px) {
+  .navbar__container {
+    gap: 20px;
+  }
+
+  .navbar__logo-full {
+    width: 230px;
+  }
+
   .navbar__menu {
-    gap: 18px;
+    gap: 16px;
   }
 
-  .navbar__link {
+  .navbar__link,
+  .navbar__menu a {
     font-size: 14px;
-  }
-
-  .navbar__logo {
-    font-size: 24px;
   }
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 12px 0;
+  }
+
   .navbar__container {
     flex-wrap: wrap;
-    padding: 16px 0;
+  }
+
+  .navbar__logo-full {
+    width: 180px;
   }
 
   .navbar__menu {
@@ -115,15 +175,10 @@
     gap: 8px;
   }
 
+  .navbar__button,
   .navbar__login-btn,
   .navbar__register-btn {
     padding: 9px 14px;
     font-size: 13px;
   }
-}
-
-.navbar__user-name {
-  color: white;
-  font-weight: 600;
-  font-size: 14px;
 }

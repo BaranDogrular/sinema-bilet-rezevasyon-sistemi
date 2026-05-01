@@ -14,7 +14,7 @@
   --border-color: rgba(255, 255, 255, 0.08);
   --shadow-color: rgba(0, 0, 0, 0.3);
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -37,12 +37,13 @@ html,
 body,
 #root {
   min-height: 100%;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
   background: linear-gradient(135deg, #020617, #071127);
   color: var(--text-main);
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -53,8 +54,9 @@ a {
 button,
 input,
 textarea,
-select {
-  font: inherit;
+select,
+a {
+  font-family: inherit;
 }
 
 button {

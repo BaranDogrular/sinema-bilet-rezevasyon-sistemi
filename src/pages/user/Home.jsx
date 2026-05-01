@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Home.css";
 import MovieCard from "../../components/movie/MovieCard";
 import { getMovieById, getImageUrl } from "../../services/tmdb";
+import { Link } from "react-router-dom";
 
 const movieIds = [
   687163,  // Project Hail Mary
@@ -63,12 +64,13 @@ const Home = () => {
             </p>
 
             <div className="home-hero__actions">
-              <a href="#featured-movies" className="home-hero__primary-btn">
-                Filmleri İncele
-              </a>
-              <a href="/movies" className="home-hero__secondary-btn">
-                Tüm Filmler
-              </a>
+            <a href="#featured-movies" className="home-hero__primary-btn">
+            Filmleri İncele
+            </a>
+
+            <Link to="/movies" className="home-hero__secondary-btn">
+            Tüm Filmler
+            </Link>
             </div>
           </div>
 
@@ -136,9 +138,9 @@ const Home = () => {
               Haftanın En Popüler Filmleri Seni Bekliyor
             </h2>
           </div>
-          <a href="/movies" className="promo__button">
-            Hemen İncele
-          </a>
+          <Link to="/movies" className="promo__button">
+          Hemen İncele
+        </Link>
         </div>
       </section>
     </>
