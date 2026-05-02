@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/images/eden-navbar-logo.png";
 
@@ -9,27 +9,48 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="container navbar__container">
+        {/* Logo */}
         <Link to="/" className="navbar__logo">
-        <img
-        src={logo}
-        alt="Eden Cineverse"
-        className="navbar__logo-full"
-        />
+          <img
+            src={logo}
+            alt="Eden Cineverse"
+            className="navbar__logo-full"
+          />
         </Link>
 
+        {/* Menü */}
         <nav className="navbar__menu">
-          <Link to="/">Ana Sayfa</Link>
-          <Link to="/movies">Filmler</Link>
+          <NavLink to="/" className="navbar__link">
+            Ana Sayfa
+          </NavLink>
+
+          <NavLink to="/movies" className="navbar__link">
+            Filmler
+          </NavLink>
 
           {isAuthenticated && (
-            <Link to="/my-reservations">Rezervasyonlarım</Link>
+            <NavLink
+              to="/my-reservations"
+              className="navbar__link"
+            >
+              Rezervasyonlarım
+            </NavLink>
           )}
 
-          {isAuthenticated && <Link to="/profile">Profil</Link>}
+          {isAuthenticated && (
+            <NavLink to="/profile" className="navbar__link">
+              Profil
+            </NavLink>
+          )}
 
-          {isAdmin && <Link to="/admin">Admin Panel</Link>}
+          {isAdmin && (
+            <NavLink to="/admin" className="navbar__link">
+              Admin Panel
+            </NavLink>
+          )}
         </nav>
 
+        {/* Sağ taraf */}
         <div className="navbar__actions">
           {isAuthenticated ? (
             <>
@@ -37,7 +58,10 @@ const Navbar = () => {
                 Hoş geldin, {user?.name}
               </span>
 
-              <button onClick={logout} className="navbar__button">
+              <button
+                onClick={logout}
+                className="navbar__button"
+              >
                 Çıkış Yap
               </button>
             </>
@@ -50,7 +74,10 @@ const Navbar = () => {
                 Giriş Yap
               </Link>
 
-              <Link to="/register" className="navbar__button">
+              <Link
+                to="/register"
+                className="navbar__register-btn"
+              >
                 Kayıt Ol
               </Link>
             </>

@@ -40,16 +40,20 @@ const Login = () => {
     <section className="auth-page">
       <div className="container auth-page__container">
         <div className="auth-card">
-          <p className="auth-card__subtitle">Hoş Geldin</p>
-          <h1 className="auth-card__title">Giriş Yap</h1>
+          <p className="auth-card__subtitle">Eden Cineverse</p>
+
+          <h1 className="auth-card__title">Tekrar Hoş Geldin</h1>
+
           <p className="auth-card__text">
-            Hesabına giriş yaparak rezervasyonlarını yönetebilirsin.
+            Hesabına giriş yaparak rezervasyonlarını, profilini ve sinema
+            deneyimini kolayca yönet.
           </p>
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="auth-form__group">
-              <label>E-posta</label>
+              <label htmlFor="email">E-posta</label>
               <input
+                id="email"
                 type="email"
                 name="email"
                 placeholder="ornek@mail.com"
@@ -60,8 +64,9 @@ const Login = () => {
             </div>
 
             <div className="auth-form__group">
-              <label>Şifre</label>
+              <label htmlFor="password">Şifre</label>
               <input
+                id="password"
                 type="password"
                 name="password"
                 placeholder="Şifrenizi girin"

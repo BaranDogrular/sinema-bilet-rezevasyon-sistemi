@@ -1,20 +1,21 @@
 .footer {
   background: #000000;
   color: #ffffff;
-  padding: 46px 0 22px;
-  margin-top: 56px;
-  border-top: 1px solid rgba(212, 175, 55, 0.12);
+  padding: 52px 0 22px;
+  margin-top: 0;
+  border-top: 1px solid rgba(245, 197, 66, 0.12);
   font-family: "Montserrat", sans-serif;
 }
 
 .footer a {
   color: rgba(255, 255, 255, 0.72);
   text-decoration: none;
-  transition: color 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 .footer a:hover {
-  color: #d4af37;
+  color: #ffffff;
+  transform: translateX(2px);
 }
 
 .footer__top {
@@ -24,34 +25,39 @@
   margin-bottom: 34px;
 }
 
-.footer__brand h2 {
-  font-size: 30px;
-  font-weight: 800;
-  margin-bottom: 14px;
-  color: #ffffff;
+.footer__brand {
+  max-width: 380px;
 }
 
-.footer__brand span {
-  color: #d4af37;
+.footer__logo-img {
+  width: 260px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 18px;
+  display: block;
 }
 
 .footer__brand p {
   color: rgba(255, 255, 255, 0.66);
-  line-height: 1.8;
-  max-width: 360px;
+  line-height: 1.85;
   font-size: 15px;
 }
 
 .footer__column h3 {
   font-size: 18px;
+  font-weight: 800;
   margin-bottom: 18px;
-  color: #ffffff;
+  background: linear-gradient(90deg, #f5c542, #ff7a3d, #ff3d6e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .footer__column ul {
-  list-style: none;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
 .footer__column li {
@@ -68,9 +74,14 @@
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 18px;
   text-align: center;
+}
+
+.footer__bottom p {
   color: rgba(255, 255, 255, 0.48);
   font-size: 14px;
 }
+
+/* responsive */
 
 @media (max-width: 992px) {
   .footer__top {
@@ -86,21 +97,10 @@
 
   .footer__top {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
 
-  .footer__brand h2 {
-    font-size: 26px;
+  .footer__logo-img {
+    width: 220px;
   }
-}
-
-.footer {
-  margin-top: 0;
-}
-
-.footer__logo-img {
-  width: 260px;
-  height: auto;
-  object-fit: contain;
-  margin-bottom: 18px;
-  display: block;
 }

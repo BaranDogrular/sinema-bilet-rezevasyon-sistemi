@@ -1,18 +1,18 @@
 :root {
-  --primary: #ef4444;
-  --primary-dark: #dc2626;
+  --primary: #d4af37;
+  --primary-dark: #b8941f;
 
-  --bg-main: #020617;
-  --bg-secondary: #0f172a;
+  --bg-main: #000000;
+  --bg-secondary: #0b1220;
   --bg-card: #111827;
-  --bg-soft: rgba(255, 255, 255, 0.04);
+  --bg-soft: rgba(212, 175, 55, 0.06);
 
   --text-main: #ffffff;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
 
-  --border-color: rgba(255, 255, 255, 0.08);
-  --shadow-color: rgba(0, 0, 0, 0.3);
+  --border-color: rgba(212, 175, 55, 0.12);
+  --shadow-color: rgba(0, 0, 0, 0.35);
 
   font-family: "Montserrat", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -40,7 +40,12 @@ body,
 }
 
 body {
-  background: linear-gradient(135deg, #020617, #071127);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, #0b1220 0%, #020617 38%),
+    radial-gradient(circle at bottom right, #071127 0%, #000000 42%),
+    #000000;
+  background-attachment: fixed;
   color: var(--text-main);
   font-family: "Montserrat", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
@@ -50,7 +55,13 @@ a {
   color: inherit;
 }
 
-
+button,
+input,
+textarea,
+select,
+a {
+  font-family: inherit;
+}
 
 button {
   border: none;
@@ -87,8 +98,8 @@ ol {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 4px solid rgba(255,255,255,0.12);
-  border-top-color: #ef4444;
+  border: 4px solid rgba(255, 255, 255, 0.12);
+  border-top-color: var(--primary);
   animation: spin 0.8s linear infinite;
 }
 
@@ -99,8 +110,8 @@ ol {
 }
 
 .empty-state {
-  background: #111827;
-  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(135deg, #0b1220, #111827);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 40px;
   text-align: center;
@@ -113,7 +124,7 @@ ol {
 }
 
 .empty-state p {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .movie-card,
@@ -128,7 +139,7 @@ ol {
 .showtime-card:hover,
 .reservation-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 35px rgba(0,0,0,0.35);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.45);
 }
 
 button,
@@ -141,10 +152,14 @@ button:hover,
 .auth-form__button:hover,
 .showtime-card__button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(239,68,68,0.28);
+  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.22);
 }
 
 @media (max-width: 768px) {
+  .container {
+    width: min(100% - 28px, 1280px);
+  }
+
   .admin-dashboard__stats,
   .admin-dashboard__actions,
   .movies-grid,

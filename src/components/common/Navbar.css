@@ -1,9 +1,9 @@
 .navbar {
   background: #000000;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+  border-bottom: 1px solid rgba(245, 197, 66, 0.12);
   padding: 14px 0;
   font-family: "Montserrat", sans-serif;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
 .navbar__container {
@@ -36,9 +36,9 @@
 .navbar__link,
 .navbar__menu a {
   position: relative;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.84);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 650;
   letter-spacing: -0.2px;
   text-decoration: none;
   transition: all 0.25s ease;
@@ -49,10 +49,17 @@
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -8px;
+  bottom: -9px;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #f5c542,
+    #ff7a3d,
+    #ff3d6e,
+    transparent
+  );
   transform: translateX(-50%);
   transition: width 0.25s ease;
 }
@@ -64,7 +71,7 @@
 
 .navbar__link:hover::after,
 .navbar__menu a:hover::after {
-  width: 100%;
+  width: 110%;
 }
 
 .navbar__actions {
@@ -87,7 +94,7 @@
   padding: 10px 18px;
   border-radius: 12px;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -95,40 +102,43 @@
 
 .navbar__button,
 .navbar__login-btn {
-  background: rgba(212, 175, 55, 0.05);
-  border: 1px solid rgba(212, 175, 55, 0.75);
-  color: #d4af37;
+  background: rgba(245, 197, 66, 0.05);
+  border: 1px solid rgba(245, 197, 66, 0.65);
+  color: #f5c542;
 }
 
 .navbar__button:hover,
 .navbar__login-btn:hover {
-  background: #d4af37;
-  color: #000000;
+  background: linear-gradient(135deg, #f5c542, #ff7a3d, #ff3d6e);
+  color: #ffffff;
+  border-color: transparent;
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.24);
+  box-shadow: 0 12px 26px rgba(255, 61, 110, 0.24);
 }
 
 .navbar__button--secondary {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.035);
   border-color: rgba(255, 255, 255, 0.16);
   color: #ffffff;
 }
 
 .navbar__button--secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.09);
   color: #ffffff;
+  border-color: rgba(245, 197, 66, 0.22);
+  box-shadow: none;
   transform: translateY(-2px);
 }
 
 .navbar__register-btn {
-  border: 1px solid #d4af37;
-  background: #d4af37;
-  color: #000000;
+  border: 1px solid rgba(245, 197, 66, 0.4);
+  background: linear-gradient(135deg, #f5c542, #ff7a3d, #ff3d6e);
+  color: #ffffff;
 }
 
 .navbar__register-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(212, 175, 55, 0.28);
+  box-shadow: 0 12px 26px rgba(255, 61, 110, 0.28);
 }
 
 @media (max-width: 992px) {
