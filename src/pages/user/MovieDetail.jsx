@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { getMovieTrailer } from "../../services/tmdb";
 import "./MovieDetail.css";
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [trailer, setTrailer] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,14 +18,6 @@ const MovieDetail = () => {
         );
 
         setMovie(response.data);
-
-        const trailerData = await getMovieTrailer(id);
-
-        if (trailerData) {
-          setTrailer(trailerData.key);
-        } else {
-          setTrailer(null);
-        }
       } catch (error) {
         console.error("Film detayı alınamadı:", error);
       } finally {
@@ -65,6 +55,10 @@ const MovieDetail = () => {
     );
   }
 
+  const trailerEmbedUrl = movie.trailerUrl
+    ? movie.trailerUrl.replace("watch?v=", "embed/").split("&")[0]
+    : null;
+
   return (
     <section className="movie-detail">
       <div className="container movie-detail__container">
@@ -77,7 +71,9 @@ const MovieDetail = () => {
         </div>
 
         <div className="movie-detail__content">
-          <p className="movie-detail__badge">Öne Çıkan Film</p>
+          <p className="movie-detail__badge">
+            {movie.status === "coming_soon" ? "Yakında" : "Öne Çıkan Film"}
+          </p>
 
           <h1 className="movie-detail__title">{movie.title}</h1>
 
@@ -103,17 +99,19 @@ const MovieDetail = () => {
 
             <div className="movie-detail__info-box">
               <h4>Durum</h4>
-              <p>Vizyonda</p>
+              <p>{movie.status === "coming_soon" ? "Yakında" : "Vizyonda"}</p>
             </div>
           </div>
 
           <div className="movie-detail__actions">
-            <Link
-              to={`/movies/${movie.id}/showtimes`}
-              className="movie-detail__primary-btn"
-            >
-              Seans Seç
-            </Link>
+            {movie.status !== "coming_soon" && (
+              <Link
+                to={`/movies/${movie.id}/showtimes`}
+                className="movie-detail__primary-btn"
+              >
+                Seans Seç
+              </Link>
+            )}
 
             <Link to="/movies" className="movie-detail__secondary-btn">
               Filmlere Dön
@@ -122,19 +120,18 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      {trailer && (
+      {trailerEmbedUrl && (
         <div className="container movie-detail__trailer">
           <h3 className="movie-detail__trailer-title">Fragman</h3>
 
-          <iframe
-            width="100%"
-            height="500"
-            src={`https://www.youtube.com/embed/${trailer}`}
-            title={`${movie.title} Trailer`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <div className="movie-detail__trailer-box">
+            <iframe
+              src={trailerEmbedUrl}
+              title={`${movie.title} Fragman`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
       )}
     </section>

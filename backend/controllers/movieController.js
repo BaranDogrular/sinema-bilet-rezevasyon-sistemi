@@ -12,6 +12,7 @@ const formatMovie = (movie) => {
     description: movie.description,
     releaseDate: movie.release_date,
     status: movie.status,
+    trailerUrl: movie.trailer_url,
   };
 };
 
@@ -37,12 +38,11 @@ export const getAllMovies = async (req, res) => {
 export const getNowShowingMovies = async (req, res) => {
   try {
     const result = await pool.query(`
-  SELECT *
-  FROM movies
-  WHERE status = 'now_showing'
-  ORDER BY id ASC
-  LIMIT 4
-`);
+      SELECT *
+      FROM movies
+      WHERE status = 'now_showing'
+      ORDER BY id ASC
+    `);
 
     const movies = result.rows.map(formatMovie);
 
@@ -57,13 +57,13 @@ export const getNowShowingMovies = async (req, res) => {
 
 export const getComingSoonMovies = async (req, res) => {
   try {
-  const result = await pool.query(`
-  SELECT *
-  FROM movies
-  WHERE status = 'coming_soon'
-  ORDER BY id ASC
-  LIMIT 4
-`);
+    const result = await pool.query(`
+      SELECT *
+      FROM movies
+      WHERE status = 'coming_soon'
+      ORDER BY id ASC
+    `);
+
     const movies = result.rows.map(formatMovie);
 
     res.json({ movies });
@@ -74,7 +74,6 @@ export const getComingSoonMovies = async (req, res) => {
     });
   }
 };
-
 export const getMovieById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -115,13 +114,14 @@ export const createMovie = async (req, res) => {
       description,
       releaseDate,
       status = "now_showing",
+      trailerUrl = null,
     } = req.body;
 
     const result = await pool.query(
       `
       INSERT INTO movies
-      (tmdb_id, title, genre, duration, rating, image, description, release_date, status)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+      (tmdb_id, title, genre, duration, rating, image, description, release_date, status, trailer_url)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
       RETURNING *
       `,
       [
@@ -134,6 +134,7 @@ export const createMovie = async (req, res) => {
         description,
         releaseDate,
         status,
+        trailerUrl,
       ]
     );
 

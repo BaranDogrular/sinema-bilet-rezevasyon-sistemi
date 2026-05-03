@@ -6,7 +6,7 @@ const MovieCard = ({ movie }) => {
     <article className="movie-card">
       <div className="movie-card__image-wrapper">
         <img
-          src={movie.image}
+          src={movie.image || "/no-image.png"}
           alt={movie.title}
           className="movie-card__image"
           loading="lazy"
@@ -15,7 +15,7 @@ const MovieCard = ({ movie }) => {
         <div className="movie-card__overlay"></div>
 
         <span className="movie-card__rating">
-          <span>★</span> {movie.rating}
+          ⭐ {movie.rating || "N/A"}
         </span>
       </div>
 
@@ -23,10 +23,15 @@ const MovieCard = ({ movie }) => {
         <h3 className="movie-card__title">{movie.title}</h3>
 
         <p className="movie-card__meta">
-          {movie.genre} • {movie.duration}
+          {movie.genre || "Film"} • {movie.duration || "-"}
         </p>
 
-        <p className="movie-card__description">{movie.description}</p>
+        <p className="movie-card__description">
+          {movie.description?.slice(0, 90)}...
+        </p>
+
+        {/* 🎬 FRAGMAN BUTONU */}
+       
 
         <Link to={`/movies/${movie.id}`} className="movie-card__button">
           Detayları Gör
