@@ -8,16 +8,32 @@ const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 
+
 const movieIds = [
-  687163,  // Project Hail Mary
-  872585,  // Oppenheimer
-  157336,  // Interstellar
-  414906,  // The Batman
+  687163, // Project Hail Mary
+  872585, // Oppenheimer
+  157336, // Interstellar
+  414906, // The Batman
   1325734, // The Drama
-  693134,  // Dune: Part Two
-  969681,  // Spider-Man: Brand New Day
-  858024,  // Hamnet
+  693134, // Dune: Part Two
+  858024, // Hamnet
+  1314481,//Şeytan Marka Giyer 2
+  936075,//micheal
+  1084242,//zootropolis 2
+  1317149,//i swear
+  83533,//avatar ateş ve kül
+
+  1083381,//backrooms
+1368337,//the odyssey
+1315772,//Minions & Monsters
+1084244,//toy stroy 5
+1300968,//the hunger games sunrise on the reaping
+  1003596,//avengers doomsday
+  1170608,//dune part 3
+  969681  // Spider-Man: Brand New Day
+
 ];
+
 
 const seedMovies = async () => {
   try {
